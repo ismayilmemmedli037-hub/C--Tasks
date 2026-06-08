@@ -1,0 +1,209 @@
+using System;
+class Program
+{
+    static string[] suallar = new string[]{
+        "Azərbaycanın paytaxtı hansıdır?",
+        "Ingilterenın paytaxtı hansıdır?",
+        "Turkiyenın paytaxtı hansıdır?",
+        "Gurcustannın paytaxtı hansıdır?",
+        "Rusiyanın paytaxtı hansıdır?",
+        "Iranin paytaxtı hansıdır?",
+        "Yunanistanin paytaxtı hansıdır?",
+        "Italiyanin paytaxtı hansıdır?",
+        "Almaniya paytaxtı hansıdır?",
+        "Fransa paytaxtı hansıdır?",
+    };
+
+    static string[][] cavablar = new string[][]{
+        new string[] { "Bakı", "Gəncə", "Naxçıvan"},
+        new string[] { "London", "Gəncə", "Naxçıvan"},
+        new string[] { "Ankara", "Gəncə", "Naxçıvan"},
+        new string[] { "Tbilis", "Gəncə", "Naxçıvan"},
+        new string[] { "Moskva", "Gəncə", "Naxçıvan"},
+        new string[] { "Terhan", "Gəncə", "Naxçıvan"},
+        new string[] { "Afina", "Gəncə", "Naxçıvan"},
+        new string[] { "Roma", "Gəncə", "Naxçıvan"},
+        new string[] { "Berlin", "Gəncə", "Naxçıvan"},
+        new string[] { "Paris", "Gəncə", "Naxçıvan"},
+    };
+
+    static void Qarisdir(string[] arr, Random rand)
+    {
+        for (int i = arr.Length - 1; i > 0; i--)
+        {
+            int j = rand.Next(0, i + 1);
+            string temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    static int DuzgunIndeksTap(string[] arr, string duzgunCavab)
+    {
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] == duzgunCavab)
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    static void RengliYaz(string metn, ConsoleColor reng, bool yeniSatir = true)
+    {
+        Console.ForegroundColor = reng;
+        if (yeniSatir)
+        {
+            Console.WriteLine(metn);
+        }
+        else
+        {
+            Console.Write(metn);
+        }
+        Console.ResetColor();
+    }
+
+    static void CavablariCap(string[] qarisiqCavablar, int secilmis)
+    {
+        char[] variantlar = { 'A', 'B', 'C' };
+        for (int i = 0; i < qarisiqCavablar.Length; i++)
+        {
+            if (i == secilmis)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.Yellow;
+                Console.Write($"{variantlar[i]}) {qarisiqCavablar[i]}");
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write($"{variantlar[i]}) ");
+                Console.ResetColor();
+                Console.WriteLine(qarisiqCavablar[i]);
+            }
+        }
+    }
+
+    static bool SualVer(int sualNo, string sual, string[] qarisiqCavablar, int duzgunIndeks, int xal)
+    {
+        int secilmis = 0;
+
+        while (true)
+        {
+            Console.Clear();
+            RengliYaz($"{sualNo}. {sual}", ConsoleColor.Yellow);
+            CavablariCap(qarisiqCavablar, secilmis);
+            Console.WriteLine();
+
+            ConsoleKeyInfo key = Console.ReadKey(true);
+
+            if (key.Key == ConsoleKey.UpArrow)
+            {
+                secilmis = (secilmis - 1 + qarisiqCavablar.Length) % qarisiqCavablar.Length;
+            }
+            else if (key.Key == ConsoleKey.DownArrow)
+            {
+                secilmis = (secilmis + 1) % qarisiqCavablar.Length;
+            }
+            else if (key.Key == ConsoleKey.Enter)
+            {
+                break;
+            }
+        }
+
+        RengliYaz($"{sualNo}. ", ConsoleColor.Yellow, false);
+        RengliYaz($"{sual}", ConsoleColor.Yellow);
+        bool duzgundur = (secilmis == duzgunIndeks);
+        char[] variantlar = { 'A', 'B', 'C' };
+
+        for (int i = 0; i < qarisiqCavablar.Length; i++)
+        {
+            if (i == secilmis && duzgundur)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{variantlar[i]}) {qarisiqCavablar[i]}");
+            }
+            else if (i == secilmis && !duzgundur)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{variantlar[i]}) {qarisiqCavablar[i]}");
+            }
+            else if (i == duzgunIndeks && !duzgundur)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{variantlar[i]}) {qarisiqCavablar[i]}");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{variantlar[i]}) {qarisiqCavablar[i]}");
+            }
+            Console.ResetColor();
+            
+        }
+
+        Console.WriteLine();
+
+        if (duzgundur)
+        {
+            RengliYaz("Cavab duzdu", ConsoleColor.Green);
+        }
+        else
+        {
+            RengliYaz("Səhv cavab", ConsoleColor.Red);
+        }
+        Console.WriteLine();
+        RengliYaz("3 saniye sonar novbeti sual baslayir", ConsoleColor.Yellow);
+        Thread.Sleep(3000);
+        Console.Clear();
+        return duzgundur;
+
+    }
+
+    static void Neticə(int xal, int duzgunSay)
+    {
+        RengliYaz($"Duzgun cavab sayı: {duzgunSay}", ConsoleColor.Green);
+        RengliYaz($"Sehv cavab sayı: {10 - duzgunSay}", ConsoleColor.Red);
+        Console.WriteLine();
+
+        ConsoleColor xalRengi = xal >= 70 ? ConsoleColor.Green : xal >= 40 ? ConsoleColor.Yellow : ConsoleColor.Red;
+        RengliYaz($"Siz {xal} xal topladız", xalRengi);
+        Console.WriteLine();
+    }
+
+    static void Main()
+    {
+        Console.OutputEncoding = System.Text.Encoding.Unicode;
+        Random rand = new Random();
+
+        int xal = 0;
+        int duzgunSay = 0;
+
+        for (int i = 0; i < suallar.Length; i++)
+        {
+            string duzgunCavab = cavablar[i][0];
+            string[] qarisiqCavablar = new string[] { cavablar[i][0], cavablar[i][1], cavablar[i][2] };
+            Qarisdir(qarisiqCavablar, rand);
+            int duzgunIndeks = DuzgunIndeksTap(qarisiqCavablar, duzgunCavab);
+
+            bool netic = SualVer(i + 1, suallar[i], qarisiqCavablar, duzgunIndeks, xal);
+
+            if (netic) 
+            { 
+                xal += 10; duzgunSay++;
+            }
+            else { 
+                xal -= 10;
+                if (xal < 0)
+                {
+                    xal = 0;
+                } 
+            }
+        }
+
+        Neticə(xal, duzgunSay);
+    }
+}
