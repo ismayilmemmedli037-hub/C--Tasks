@@ -1,0 +1,13 @@
+Const Biz koda yazan vaxti deyeri biz veririk ve onu deyismek olmur yeni const deyimeye icaze vermir.
+
+readonly ise Obyekt yaratdiqda Constructorda deyiseni teyin edir sonradan onu deyismek olmur 
+
+
+const string CIO = "Ismayil";
+
+readonly string Worker;
+
+public Program()
+{
+    Worker = "Yusuf";
+}
