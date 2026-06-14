@@ -1,0 +1,483 @@
+using System;
+class Program
+{
+    class Animal
+    {
+        public string Nickname { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+        public int Energy { get; set; }
+        public double Price { get; set; }
+        public double MealQuantity { get; set; }
+        public virtual void Eat(double mealQuantity) { }
+        public virtual void Sleep() {}
+        public virtual void Play() {}
+    }
+
+    class Cat : Animal
+    {
+        public override void Eat(double mealQuantity)
+        {
+            MealQuantity += mealQuantity;
+            Energy += 20;
+            Price += 20;
+            Console.WriteLine($"{Nickname} yemək yedi");
+        }
+
+        public override void Sleep()
+        {
+            Energy += 50;
+            Console.WriteLine($"{Nickname} yatır");
+        }
+
+        public override void Play()
+        {
+            Energy -= 25;
+            Console.WriteLine($"{Nickname} oynayır");
+            if (Energy <= 0)
+            {
+                Energy = 0;
+                Console.WriteLine();
+                Console.WriteLine($"{Nickname} yatmaqa getdi");
+                Sleep();
+            }
+        }
+    }
+
+
+    class Dog : Animal 
+    {
+        public override void Eat(double mealQuantity)
+        {
+            MealQuantity += mealQuantity;
+            Energy += 25;
+            Price += 20;
+            Console.WriteLine($"{Nickname} yemək yedi");
+        }
+
+        public override void Sleep()
+        {
+            Energy += 75;
+            Console.WriteLine($"{Nickname} yatır");
+        }
+
+        public override void Play()
+        {
+            Energy -= 20;
+            Console.WriteLine($"{Nickname} oynayır");
+            if (Energy <= 0)
+            {
+                Energy = 0;
+                Console.WriteLine();
+                Console.WriteLine($"{Nickname} yatmaqa getdi");
+                Sleep();
+            }
+        }
+    }
+
+    class Bird : Animal 
+    {
+        public override void Eat(double mealQuantity)
+        {
+            MealQuantity += mealQuantity;
+            Energy += 15;
+            Price += 20;
+            Console.WriteLine($"{Nickname} yemək yedi");
+        }
+
+        public override void Sleep()
+        {
+            Energy += 35;
+            Console.WriteLine($"{Nickname} yatır");
+        }
+
+        public override void Play()
+        {
+            Energy -= 30;
+            Console.WriteLine($"{Nickname} oynayır");
+            if (Energy <= 0)
+            {
+                Energy = 0;
+                Console.WriteLine();
+                Console.WriteLine($"{Nickname} yatmaqa getdi");
+                Sleep();
+            }
+        }
+    }
+
+    class Fish : Animal 
+    {
+        public override void Eat(double mealQuantity)
+        {
+            MealQuantity += mealQuantity;
+            Energy += 25;
+            Price += 20;
+            Console.WriteLine($"{Nickname} yemək yedi");
+        }
+
+        public override void Sleep()
+        {
+            Energy += 75;
+            Console.WriteLine($"{Nickname} yatır");
+        }
+
+        public override void Play()
+        {
+            Energy -= 20;
+            Console.WriteLine($"{Nickname} oynayır");
+            if (Energy <= 0)
+            {
+                Energy = 0;
+                Console.WriteLine();
+                Console.WriteLine($"{Nickname} yatmaqa getdi");
+                Sleep();
+            }
+        }
+    }
+
+    class PetShop
+    {
+        public Cat[] Cats = new Cat[3];
+        public Dog[] Dogs = new Dog[3];
+        public Bird[] Birds = new Bird[3];
+        public Fish[] Fishes = new Fish[3];
+        public void RemoveByNickName(string nickname)
+        {
+            for (int i = 0; i < Cats.Length; i++)
+            {
+                if (Cats[i] != null && Cats[i].Nickname == nickname)
+                {
+                    Cats[i] = null;
+                }
+            }
+
+            for (int i = 0; i < Dogs.Length; i++)
+            {
+                if (Dogs[i] != null && Dogs[i].Nickname == nickname)
+                {
+                    Dogs[i] = null;
+                }
+            }
+
+            for (int i = 0; i < Birds.Length; i++)
+            {
+                if (Birds[i] != null && Birds[i].Nickname == nickname)
+                {
+                    Birds[i] = null;
+                }
+            }
+
+            for (int i = 0; i < Fishes.Length; i++)
+            {
+                if (Fishes[i] != null && Fishes[i].Nickname == nickname)
+                {
+                    Fishes[i] = null;
+                }
+            }
+        }
+
+        public double TotalMeal()
+        {
+            double total = 0;
+            for (int i = 0; i < Cats.Length; i++)
+            {
+                if (Cats[i] != null)
+                    total += Cats[i].MealQuantity;
+            }
+            return total;
+        }
+
+        public double TotalCatPrice()
+        {
+            double total = 0;
+            for (int i = 0; i < Cats.Length; i++)
+            {
+                if (Cats[i] != null)
+                    total += Cats[i].Price;
+            }
+            return total;
+        }
+        public double TotalDogPrice()
+        {
+            double total = 0;
+            for (int i = 0; i < Dogs.Length; i++)
+            {
+                if (Dogs[i] != null)
+                    total += Dogs[i].Price;
+            }
+            return total;
+        }
+        public double TotalBirdPrice()
+        {
+            double total = 0;
+            for (int i = 0; i < Birds.Length; i++)
+            {
+                if (Birds[i] != null)
+                    total += Birds[i].Price;
+            }
+            return total;
+        }
+        public double TotalFishPrice()
+        {
+            double total = 0;
+            for (int i = 0; i < Fishes.Length; i++)
+            {
+                if (Fishes[i] != null)
+                    total += Fishes[i].Price;
+            }
+            return total;
+        }
+    }
+
+    static void Main()
+    {
+        Console.OutputEncoding = System.Text.Encoding.Unicode;
+
+        PetShop shop = new PetShop();
+
+
+
+
+        ///////////////////////////
+        // Cat
+        var cat = new Cat();
+        cat.Nickname = "Limon";
+        cat.Age = 7;
+        cat.Gender = "Erkek";
+        cat.Energy = 30;
+        cat.Price = 300;
+
+        ///////////////////////////
+        // Dog 
+        var dog = new Dog();
+        dog.Nickname = "Duman";
+        dog.Age = 1;
+        dog.Gender = "Erkek";
+        dog.Energy = 30;
+        dog.Price = 1300;
+
+        ///////////////////////////
+        // Bird
+        var bird = new Bird();
+        bird.Nickname = "Sarı";
+        bird.Age = 3;
+        bird.Gender = "Erkek";
+        bird.Energy = 30;
+        bird.Price = 130;
+
+        ///////////////////////////
+        // Fish
+        var fish = new Fish();
+        fish.Nickname = "Balıq";
+        fish.Age = 2;
+        fish.Gender = "Erkek";
+        fish.Energy = 30;
+        fish.Price = 10;
+
+        ///////////////////////////
+        shop.Cats[0] = cat;
+        shop.Dogs[0] = dog;
+        shop.Birds[0] = bird;
+        shop.Fishes[0] = fish;
+
+        while (true)
+        {
+            Console.WriteLine("----- Animal -----");
+            Console.WriteLine("1 - Cat");
+            Console.WriteLine("2 - Dog");
+            Console.WriteLine("3 - Bird");
+            Console.WriteLine("4 - Fish");
+            Console.WriteLine("5 - Exit");
+            Console.Write("Secimini et: ");
+
+            string choice1 = Console.ReadLine();
+            Console.WriteLine();
+
+            if (choice1 == "1")
+            {
+                while (true)
+                {
+                    Console.WriteLine("----- Cat -----");
+                    Console.WriteLine("1 - Play");
+                    Console.WriteLine("2 - Eat");
+                    Console.WriteLine("3 - Show");
+                    Console.WriteLine("4 - Exit");
+                    Console.Write("Secimini et: ");
+
+                    string choice2 = Console.ReadLine();
+                    Console.WriteLine();
+
+                    if (choice2 == "1")
+                    {
+                        cat.Play();
+                    }
+                    else if (choice2 == "2")
+                    {
+                        cat.Eat(100);
+                    }
+                    else if (choice2 == "3")
+                    {
+                        Console.WriteLine($"{cat.Nickname} enerji: {cat.Energy}");
+                        Console.WriteLine($"{cat.Nickname} qiymet: {cat.Price}");
+                        Console.WriteLine($"{cat.Nickname} yemek miqdarı: {cat.MealQuantity}");
+                    }
+                    else if (choice2 == "4")
+                    {
+                        Console.WriteLine("Cixildi");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Reqem sec");
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+            else if (choice1 == "2")
+            {
+                while (true)
+                {
+                    Console.WriteLine("----- Dog -----");
+                    Console.WriteLine("1 - Play");
+                    Console.WriteLine("2 - Eat");
+                    Console.WriteLine("3 - Show");
+                    Console.WriteLine("4 - Exit");
+                    Console.Write("Secimini et: ");
+
+                    string choice3 = Console.ReadLine();
+                    Console.WriteLine();
+
+                    if (choice3 == "1")
+                    {
+                        dog.Play();
+                    }
+                    else if (choice3 == "2")
+                    {
+                        dog.Eat(100);
+                    }
+                    else if (choice3 == "3")
+                    {
+                        Console.WriteLine($"{dog.Nickname} enerji: {dog.Energy}");
+                        Console.WriteLine($"{dog.Nickname} qiymet: {dog.Price}");
+                        Console.WriteLine($"{dog.Nickname} yemek miqdarı: {dog.MealQuantity}");
+                    }
+                    else if (choice3 == "4")
+                    {
+                        Console.WriteLine("Cixildi");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Reqem sec");
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+            else if (choice1== "3")
+            {
+                while (true)
+                {
+                    Console.WriteLine("----- Bird -----");
+                    Console.WriteLine("1 - Play");
+                    Console.WriteLine("2 - Eat");
+                    Console.WriteLine("3 - Show");
+                    Console.WriteLine("4 - Exit");
+                    Console.Write("Secimini et: ");
+
+                    string choice3 = Console.ReadLine();
+                    Console.WriteLine();
+
+                    if (choice3 == "1")
+                    {
+                        bird.Play();
+                    }
+                    else if (choice3 == "2")
+                    {
+                        bird.Eat(100);
+                    }
+                    else if (choice3 == "3")
+                    {
+                        Console.WriteLine($"{bird.Nickname} enerji: {bird.Energy}");
+                        Console.WriteLine($"{bird.Nickname} qiymet: {bird.Price}");
+                        Console.WriteLine($"{bird.Nickname} yemek miqdarı: {bird.MealQuantity}");
+                    }
+                    else if (choice3 == "4")
+                    {
+                        Console.WriteLine("Cixildi");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Reqem sec");
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+            else if (choice1 == "4")
+            {
+                while (true)
+                {
+                    Console.WriteLine("----- Fish -----");
+                    Console.WriteLine("1 - Play");
+                    Console.WriteLine("2 - Eat");
+                    Console.WriteLine("3 - Show");
+                    Console.WriteLine("4 - Exit");
+                    Console.Write("Secimini et: ");
+
+                    string choice3 = Console.ReadLine();
+                    Console.WriteLine();
+
+                    if (choice3 == "1")
+                    {
+                        fish.Play();
+                    }
+                    else if (choice3 == "2")
+                    {
+                        fish.Eat(100);
+                    }
+                    else if (choice3 == "3")
+                    {
+                        Console.WriteLine($"{fish.Nickname} enerji: {fish.Energy}");
+                        Console.WriteLine($"{fish.Nickname} qiymet: {fish.Price}");
+                        Console.WriteLine($"{fish.Nickname} yemek miqdarı: {fish.MealQuantity}");
+                    }
+                    else if (choice3 == "4")
+                    {
+                        Console.WriteLine("Cixildi");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Reqem sec");
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+            else if (choice1 == "5")
+            {
+                Console.WriteLine("Cixildi");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Reqem sec");
+            }
+
+            Console.WriteLine();
+        }
+
+
+        Console.WriteLine();
+        Console.WriteLine($"Total Cat qiymeti: {shop.TotalCatPrice()}");
+        Console.WriteLine($"Total Dog qiymeti: {shop.TotalDogPrice()}");
+        Console.WriteLine($"Total Bird qiymeti: {shop.TotalBirdPrice()}");
+        Console.WriteLine($"Total Fish qiymeti: {shop.TotalFishPrice()}");
+        Console.WriteLine();
+        Console.WriteLine($"Total yemek miqdarı: {shop.TotalMeal()}");
+
+    }
+}
