@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
 
-namespace Bank 
-{ 
-    internal class User
+namespace UserNamespace
+{
+    public class User
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
+
         public string Surname { get; set; }
-        public Card CreditCard { get; set; }
-        public OperationTransaction[] Transactions { get; set; } = new OperationTransaction[100];
-        public int TransactionCount { get; set; } = 0;
+
+        public int Age { get; set; }
+
+        public string Email { get; set; }
+
+        public string Password { get; set; }
     }
 }
