@@ -58,23 +58,6 @@ class Program
         user.Email = "ismayil@gmail.com";
         user.Password = "123456";
         // ////////////////////////////////////////////////////////////
-        //Console.WriteLine($"Admin: {admin.Username}");
-        //Console.WriteLine($"Email: {admin.Email}");
-
-        //Console.WriteLine();
-        //Console.WriteLine("Postlar:");
-        //for (int i = 0; i < admin.Posts.Length; i++)
-        //{
-        //    Console.WriteLine(admin.Posts[i].Content);
-        //}
-
-        //Console.WriteLine();
-        //Console.WriteLine("Bildirişlər:");
-        //for (int i = 0; i < admin.Notifications.Length; i++)
-        //{
-        //    Console.WriteLine(admin.Notifications[i].Text);
-        //}
-
         while (true)
         {
             Console.WriteLine("1 - User");
