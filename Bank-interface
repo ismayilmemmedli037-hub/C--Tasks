@@ -1,0 +1,146 @@
+using System;
+
+interface IOrganize { void Organize(); }
+interface IControl { void Control(); }
+interface IMakeMeeting { void MakeMeeting(); }
+interface IDecreasePercentage { void DecreasePercentage(double percent); }
+interface IAddOperation { void AddOperation(Operation operation); }
+interface ICalculateSalaries { void CalculateSalaries(); }
+interface ICalculatePercent { void CalculatePercent(); }
+interface IPayment { void Payment(); }
+interface ICalculateProfit { void CalculateProfit(); }
+interface IShowAllCredit { void ShowAllCredit(); }
+interface IShowClientCredit { void ShowClientCredit(string fullName); }
+interface IPayCredit { void PayCredit(Client client, double money); }
+
+class HumanInfo
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public int Age { get; set; }
+    public string Position { get; set; }
+    public double Salary { get; set; }
+
+}
+
+class CEO : HumanInfo, IOrganize, IControl, IMakeMeeting, IDecreasePercentage
+{
+    public void Organize() => Console.WriteLine("CEO isi organize edir");
+    public void Control() => Console.WriteLine("CEO her seyi kontrol edir");
+    public void MakeMeeting() => Console.WriteLine("CEO meeting kecirir");
+    public void DecreasePercentage(double percent) => Console.WriteLine($"CEO maaslari {percent}% azaltdi");
+}
+
+class Worker : HumanInfo, IAddOperation
+{
+    public int StartTime { get; set; }
+    public int EndTime { get; set; }
+    public List<Operation> Operations { get; set; }
+
+    public void AddOperation(Operation operation)
+    {
+        Operations.Add(operation);
+        Console.WriteLine($"Emeliyyat elave olundu: {operation.ProcessName}");
+    }
+}
+
+class Manager : HumanInfo, IOrganize, ICalculateSalaries
+{
+    public void Organize() => Console.WriteLine("Manager isi organize edir");
+    public void CalculateSalaries() => Console.WriteLine("Manager maas hesabladi");
+}
+
+class Operation
+{
+    public Guid Id { get; set; }
+    public string ProcessName { get; set; }
+    public DateTime Datetime { get; set; }
+}
+
+class Credit : ICalculatePercent, IPayment
+{
+    public Guid Id { get; set; }
+    public Client Client { get; set; }
+    public double Amount { get; set; }
+    public double Percent { get; set; }
+    public int Months { get; set; }
+
+    public void CalculatePercent()
+    {
+        double borc = Amount + (Amount * Percent / 100);
+        Console.WriteLine($"Umumi borc: {borc}");
+    }
+
+    public void Payment() => Console.WriteLine($"{Client.Name} odenis etdi");
+}
+
+class Client : HumanInfo
+{
+    public string LiveAddress { get; set; }
+    public string WorkAddress { get; set; }
+}
+
+class Bank : ICalculateProfit, IShowAllCredit, IShowClientCredit, IPayCredit
+{
+    public string Name { get; set; }
+    public double Budget { get; set; }
+    public double Profit { get; set; }
+    public CEO CEO { get; set; }
+    public List<Worker> Workers { get; set; }
+    public List<Manager> Managers { get; set; }
+    public List<Client> Clients { get; set; }
+    public List<Credit> Credits { get; set; }
+
+    public void CalculateProfit()
+    {
+        double profit = 0;
+        foreach (var credit in Credits)
+        {
+            profit += credit.Amount * credit.Percent / 100;
+        }
+        Profit = profit;
+        Console.WriteLine($"Bankin geliri: {profit}");
+    }
+    public void ShowAllCredit()
+    {
+        foreach (var credit in Credits)
+        {
+            Console.WriteLine($"Client: {credit.Client.Name}");
+            Console.WriteLine($"Borc: {credit.Amount}");
+        }
+    }
+    public void ShowClientCredit(string fullName)
+    {
+        foreach (var credit in Credits)
+        {
+            if (credit.Client.Name + " " + credit.Client.Surname == fullName)
+            {
+                Console.WriteLine($"Borc: {credit.Amount}");
+                Console.WriteLine($"Faiz: {credit.Percent}");
+            }    
+        }
+    }
+    public void PayCredit(Client client, double money)
+    {
+        Credit credit = null;
+        foreach (var item in Credits)
+        {
+            if (item.Client == client)
+            {
+                credit = item;
+                break;
+            }
+        }
+
+        if (credit == null)
+        {
+            Console.WriteLine("Kredit tapilmadi");
+            return;
+        }
+
+        credit.Amount -= money;
+        Console.WriteLine($"Odenis: {money}");
+        Console.WriteLine($"Qalan borc: {credit.Amount}");
+    }
+}
