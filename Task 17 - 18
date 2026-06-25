@@ -1,0 +1,64 @@
+using System.Reflection.Metadata;
+
+public class DocumentProgram
+{
+    public void OpenDocument() => Console.WriteLine("Document Opened");
+    public virtual void EditDocument() => Console.WriteLine("Can Edit in Pro and Expert versions");
+    public virtual void SaveDocument() => Console.WriteLine("Can Save in Pro and Expert versions");
+}
+public class ProDocumentProgram : DocumentProgram
+{
+    public void OpenDocument() => Console.WriteLine("Document Opened");
+    public override sealed void EditDocument() => Console.WriteLine("Can Edit in Pro and Expert versions");
+    public override void SaveDocument() => Console.WriteLine("Document Saved in doc format, for pdf format buy Expert packet");
+}
+
+public class ExpertDocument : ProDocumentProgram
+{
+    public void OpenDocument() => Console.WriteLine("Document Opened");
+
+    //public override sealed void EditDocument() => Console.WriteLine(" Document Edited");
+    // biz bunu seald etmisik deye islenmir amma bunu siz tapsiriqda istemisiz
+    // yeqin men sehv basa dusmusem
+
+    public override void SaveDocument() => Console.WriteLine("Document Saved in pdf format");
+}
+class Program
+{
+    static void Main()
+    {
+        DocumentProgram DProgram;
+        DocumentProgram PDProgram;
+        DocumentProgram EDocument; 
+        while (true)
+        {
+            Console.Write("Acar soz daxil et: ");
+            string secim = Console.ReadLine();
+            if (secim == "Basic" || secim == "basic")
+            {
+                DProgram = new();
+                DProgram.OpenDocument();
+                DProgram.EditDocument();
+                DProgram.SaveDocument();
+            } 
+            else if (secim == "Pro" || secim == "pro")
+            {
+                PDProgram = new ProDocumentProgram();
+                PDProgram.OpenDocument();
+                PDProgram.EditDocument();
+                PDProgram.SaveDocument();
+            }
+            else if(secim == "Expert" || secim == "expert")
+            {
+                EDocument = new ExpertDocument();
+                EDocument.OpenDocument();
+                // EDocument.EditDocument();
+                EDocument.SaveDocument();
+            }
+            else
+            {
+                Console.WriteLine("Sehv acar");
+            }
+        }
+    }
+}
